@@ -25,6 +25,8 @@ import {Product} from '@/src/types/product';
 import {FlashList} from '@shopify/flash-list';
 import Rating from '@/src/components/reusables/Rating';
 import ThemedModal from '@/src/components/reusables/ThemedModal';
+import {useDispatch} from 'react-redux';
+import {addItemToCart} from '@/src/app/features/theme/cartSlice';
 
 type Props = {};
 
@@ -95,8 +97,10 @@ export default DashBoardScreen;
 const ProductItem = ({product}: {product: Product}) => {
   const theme = useTheme();
   const [openAddToCartModal, setAddToCartModal] = useState(false);
+  const dispatch = useDispatch();
+  const {showToast} = useToast();
   return (
-    <ThemedButton type="text">
+    <ThemedButton onPress={() => setAddToCartModal(true)} type="text">
       <ThemedModal
         visible={openAddToCartModal}
         onRequestClose={() => setAddToCartModal(false)}
@@ -107,14 +111,31 @@ const ProductItem = ({product}: {product: Product}) => {
           color={theme.background}
           pa={20}
           radius={scale(10)}>
-          <ThemedText size="lg" weight="bold">
-            Add to Cart
-          </ThemedText>
-          <ThemedText size="md">Quantity</ThemedText>
-          <ThemedText size="md">Size</ThemedText>
+          <ImageWrapper
+            height={scale(150)}
+            width={sWidth - scale(40)}
+            source={{uri: product.image}}
+          />
+          <ThemedText>Description: {product.description}</ThemedText>
           <Box direction="row" gap={10}>
-            <ThemedButton label="Add to Cart" color={theme.danger} />
-            <ThemedButton label="Cancel" />
+            <ThemedButton
+              label="Add to Cart"
+              onPress={() => {
+                dispatch(addItemToCart(product));
+                showToast({
+                  type: 'success',
+                  title: `${product.title} added to cart`,
+                });
+                setAddToCartModal(false);
+              }}
+              width={sWidth * 0.5}
+              color={theme.danger}
+            />
+            <ThemedButton
+              onPress={() => setAddToCartModal(false)}
+              type="primary-outlined"
+              label="Cancel"
+            />
           </Box>
         </Box>
       </ThemedModal>
