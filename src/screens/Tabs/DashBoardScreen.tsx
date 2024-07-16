@@ -55,7 +55,7 @@ const DashBoardScreen = (props: Props) => {
       } else {
         toast.showToast({
           type: 'error',
-          title: 'IP Address not found',
+          title: 'Products fetching was unsuccessful',
         });
       }
 
@@ -154,9 +154,13 @@ const ProductItem = ({product}: {product: Product}) => {
           height={scale(150)}
           resizeMode="contain"
         />
-        <Box height={'100%'} justify="space-between">
+        <Box
+          height={'100%'}
+          px={scale(10)}
+          width={sWidth / 2 - scale(20)}
+          justify="space-between">
           <ThemedText
-            size={'xxs'}
+            size={'xs'}
             textProps={{
               numberOfLines: 2,
               ellipsizeMode: 'middle',
