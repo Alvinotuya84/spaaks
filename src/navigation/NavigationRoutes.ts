@@ -13,7 +13,7 @@ export const NavigationRoutes = {
   HomeTabs: {
     DashboardScreen: 'DashboardScreen',
     ProfileScreen: 'ProfileScreen',
-    MarketDataScreen: 'MarketDataScreen',
+    CartScreen: 'CartScreen',
   },
 };
 type AuthStackParamList = {

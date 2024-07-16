@@ -2,11 +2,12 @@
 
 import {configureStore, ThunkAction, Action} from '@reduxjs/toolkit';
 import themeReducer from '../app/features/theme/themeSlice';
+import cartReducer from './features/theme/cartSlice';
 
 export const store = configureStore({
   reducer: {
     theme: themeReducer,
-    // Add other reducers here if needed
+    cart: cartReducer,
   },
 });
 

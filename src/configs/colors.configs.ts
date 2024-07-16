@@ -1,6 +1,6 @@
 export const Colors = {
   common: {
-    primary: '#1C59CD',
+    primary: '#55b8fa',
     secondary: '#000',
     tertiary: '#000',
     quaternary: '#000',
@@ -8,7 +8,7 @@ export const Colors = {
     senary: '#000',
   },
   light: {
-    primary: '#1C59CD',
+    primary: '#55b8fa',
     border: 'rgb(39, 39, 41)',
     secondary: 'red',
     surface: '#F6F7FB',

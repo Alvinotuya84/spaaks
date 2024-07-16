@@ -100,10 +100,7 @@ const Page = forwardRef(
                   )}
                   {/* <Spacer width={30} /> */}
                   <Box flex={1} align="center">
-                    <ThemedText
-                      fontWeight="semibold"
-                      color={'black'}
-                      size={scale(16)}>
+                    <ThemedText weight="bold" color={theme.primary} size={'lg'}>
                       {props.header?.title || ''}
                     </ThemedText>
                   </Box>

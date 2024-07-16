@@ -4,13 +4,12 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Box from '@/src/components/reusables/Box';
 import DashBoardScreen from '@/src/screens/Tabs/DashBoardScreen';
-import MarketDataScreen from '@/src/screens/Tabs/MarketDataScreen';
-import ProfileScreen from '@/src/screens/Tabs/ProfileScreen';
 import {useTheme} from '@/src/hooks/useTheme.hook';
 import {scale} from '@/src/constants/scaler.constants';
 import ThemedButton from '../components/reusables/ThemedButton';
 import {useSafeNavigation} from '../hooks/useSafeNavigation';
 import Animated, {useAnimatedStyle, withSpring} from 'react-native-reanimated';
+import CartScreen from '../screens/Tabs/CartScreen';
 
 const MainTab = createBottomTabNavigator();
 
@@ -22,16 +21,10 @@ const routesConfig = [
     activeIcon: 'home-sharp',
   },
   {
-    name: 'MarketDataScreen',
-    component: MarketDataScreen,
-    icon: 'stats-chart',
-    activeIcon: 'stats-chart-sharp',
-  },
-  {
-    name: 'ProfileScreen',
-    component: ProfileScreen,
-    icon: 'person',
-    activeIcon: 'person-sharp',
+    name: 'CartScreen',
+    component: CartScreen,
+    icon: 'cart-outline',
+    activeIcon: 'cart',
   },
 ];
 
