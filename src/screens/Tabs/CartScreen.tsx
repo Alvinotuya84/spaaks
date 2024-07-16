@@ -20,7 +20,7 @@ const CartScreen = (props: Props) => {
         title: 'My Cart',
       }}>
       {totalAmount === 0 ? (
-        <Box justify="center" flex={1} gap={10} align="center">
+        <Box justify="center" flex={1} align="center">
           <LottieView
             autoPlay
             style={{

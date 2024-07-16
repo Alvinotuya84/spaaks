@@ -1,5 +1,5 @@
 import {View, Text, Alert} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import Box from '@/src/components/reusables/Box';
 import LinearGradientBox from '@/src/components/reusables/LinearGradientBox';
 import {scale} from '@/src/constants/scaler.constants';
@@ -21,6 +21,10 @@ import {useToast} from '@/src/components/toast-manager';
 import useMainStore from '@/src/app/store2';
 import {useSafeNavigation} from '@/src/hooks/useSafeNavigation';
 import ThemedSwitchButton from '@/src/components/reusables/ThemedSwitchButton';
+import {Product} from '@/src/types/product';
+import {FlashList} from '@shopify/flash-list';
+import Rating from '@/src/components/reusables/Rating';
+import ThemedModal from '@/src/components/reusables/ThemedModal';
 
 type Props = {};
 
@@ -29,31 +33,22 @@ const DashBoardScreen = (props: Props) => {
   const toast = useToast();
   const [ip, setIp] = React.useState<string>('');
   const navigation = useSafeNavigation();
+  const {theme: userTheme, setTheme} = useMainStore();
   const {
-    setUserIpDetails,
-    userIpDetails,
-    theme: userTheme,
-    setTheme,
-  } = useMainStore();
-  const {
-    data: ipData,
+    data: products,
     error,
     isLoading: isIpLoading,
     refetch,
   } = useQuery({
-    queryKey: ['ip'],
+    queryKey: ['products'],
     queryFn: async () => {
-      const response = await fetchJson<IpLocationResponse>(
-        `https://ipwho.is/${ip}`,
+      const response = await fetchJson<Product[]>(
+        `https://fakestoreapi.com/products`,
       );
-      if (response.success) {
+      if (response.length > 0) {
         toast.showToast({
           type: 'success',
-          title: 'IP Address fetched successfully',
-        });
-        setUserIpDetails({
-          ...response,
-          image: require('@/assets/slider/slider_one.png'),
+          title: 'Products fetched successfully',
         });
       } else {
         toast.showToast({
@@ -84,146 +79,79 @@ const DashBoardScreen = (props: Props) => {
           }}
         />
       </Box>
-      <LinearGradientBox
-        colors={[theme.primary, theme.background]}
-        start={{x: 0, y: 1}}
-        end={{x: 1, y: 0}}
-        height={scale(170)}
-        px={scale(20)}
-        py={scale(50)}
-        color={theme.primary}>
-        <Box direction="row" align="center" justify="space-between">
-          <Box alignSelf="flex-end">
-            <ThemedText color={theme.background} size={'xxxl'} weight="bold">
-              IP TRACKER
-            </ThemedText>
-          </Box>
-
-          <ImageWrapper
-            source={require('@/assets/home/amega-home.png')}
-            height={scale(100)}
-            width={scale(100)}
-          />
-        </Box>
-      </LinearGradientBox>
-      <Box px={scale(20)} height={scale(200)} color={theme.primary}>
-        <Box mb={scale(30)} align="center" width={'100%'} direction="row">
-          <ThemedSearchInput
-            onChangeText={setIp}
-            value={ip}
-            wrapper={{
-              width: sWidth - scale(100),
-              color: theme.background,
-              borderColor: 'transparent',
-            }}
-          />
-          <Spacer width={scale(10)} />
-          <ThemedButton
-            color={theme.background}
-            icon={{
-              name: 'search',
-              color: theme.primary,
-              size: 'xxs',
-              source: 'Feather',
-            }}
-            loading={isIpLoading}
-            onPress={() => {
-              if (ip.length <= 0) {
-                toast.showToast({
-                  type: 'error',
-                  title: 'Please enter an IP Address',
-                });
-                return false;
-              }
-              refetch();
-            }}
-            width={scale(60)}
-            height={scale(60)}
-            radius={scale(10)}
-            size={'lg'}
-          />
-        </Box>
-
-        <Box
-          width={'100%'}
-          borderWidth={1}
-          direction="row"
-          justify="space-between"
-          borderColor={theme.background}
-          radius={scale(10)}
-          pa={scale(10)}
-          height={scale(70)}>
-          <Box height={'100%'} justify="space-between">
-            <ThemedText color={theme.background} size={'sm'} weight="bold">
-              IP Address :
-            </ThemedText>
-            <ThemedText color={theme.background} size={'xs'}>
-              {ipData?.ip}
-            </ThemedText>
-          </Box>
-          <Box height={'100%'} justify="space-between">
-            <ThemedText color={theme.background} size={'sm'} weight="bold">
-              Location :
-            </ThemedText>
-            <ThemedText color={theme.background} size={'xs'}>
-              {ipData?.city}
-              {', '}
-              {ipData?.country}
-            </ThemedText>
-          </Box>
-          <Box height={'100%'} justify="space-between">
-            <ThemedText color={theme.background} size={'sm'} weight="bold">
-              Timezone :
-            </ThemedText>
-            <ThemedText color={theme.background} size={'xs'}>
-              {ipData?.timezone?.abbr} +{ipData?.timezone?.utc}
-            </ThemedText>
-          </Box>
-          <Box height={'100%'} justify="space-between">
-            <ThemedText color={theme.background} size={'sm'} weight="bold">
-              ISP :
-            </ThemedText>
-            <ThemedText color={theme.background} size={'xxxs'}>
-              {ipData?.connection?.org}
-            </ThemedText>
-          </Box>
-        </Box>
-      </Box>
-      <Box
-        flex={1}
-        radiusTop={scale(20)}
-        mt={scale(-10)}
-        py={scale(20)}
-        color={theme.background}>
-        <Box px={scale(10)}>
-          <ThemedText color={theme.primary} size={'xxl'} weight="bold">
-            My Gallery
-          </ThemedText>
-        </Box>
-
-        <Box height={scale(230)} my={scale(20)} width={'100%'}>
-          <ImageSlider
-            onSelecteImage={selectedImage => {
-              setUserIpDetails({
-                ...userIpDetails,
-                image: selectedImage,
-              });
-              navigation.navigate('ProfileScreen');
-            }}
-            images={[
-              require('@/assets/slider/slider_two.jpg'),
-              require('@/assets/slider/slider_three.jpg'),
-              require('@/assets/slider/slider_four.jpg'),
-              require('@/assets/slider/slider_five.jpg'),
-              require('@/assets/slider/slider_six.jpg'),
-              require('@/assets/slider/slider_seven.jpg'),
-              require('@/assets/slider/slider_one.png'),
-            ]}
-          />
-        </Box>
+      <Box flex={1} gap={10} pa={10}>
+        <FlashList
+          data={products}
+          renderItem={({item}) => <ProductItem product={item} />}
+          keyExtractor={item => item.id.toString()}
+        />
       </Box>
     </Box>
   );
 };
 
 export default DashBoardScreen;
+
+const ProductItem = ({product}: {product: Product}) => {
+  const theme = useTheme();
+  const [openAddToCartModal, setAddToCartModal] = useState(false);
+  return (
+    <ThemedButton type="text">
+      <ThemedModal
+        visible={openAddToCartModal}
+        onRequestClose={() => setAddToCartModal(false)}
+        close={() => setAddToCartModal(false)}>
+        <Box
+          direction="column"
+          gap={20}
+          color={theme.background}
+          pa={20}
+          radius={scale(10)}>
+          <ThemedText size="lg" weight="bold">
+            Add to Cart
+          </ThemedText>
+          <ThemedText size="md">Quantity</ThemedText>
+          <ThemedText size="md">Size</ThemedText>
+          <Box direction="row" gap={10}>
+            <ThemedButton label="Add to Cart" color={theme.danger} />
+            <ThemedButton label="Cancel" />
+          </Box>
+        </Box>
+      </ThemedModal>
+      <Box
+        borderWidth={1}
+        borderColor={theme.text}
+        my={10}
+        direction="row"
+        width={'100%'}
+        radius={scale(10)}
+        color={theme.background}
+        pa={scale(10)}>
+        <ImageWrapper
+          width={sWidth / 2 - scale(20)}
+          source={{uri: product.image}}
+          height={scale(150)}
+          resizeMode="contain"
+        />
+        <Box height={'100%'} justify="space-between">
+          <ThemedText
+            size={'xxs'}
+            textProps={{
+              numberOfLines: 2,
+              ellipsizeMode: 'middle',
+            }}>
+            {product.title}
+          </ThemedText>
+
+          <Rating rating={product.rating.rate} />
+          <ThemedText size="lg" weight="bold" color={theme.primary}>
+            ${product.price}
+          </ThemedText>
+          <ThemedText size="sm" color={theme.primaryGray}>
+            Category: {product.category}
+          </ThemedText>
+        </Box>
+      </Box>
+    </ThemedButton>
+  );
+};

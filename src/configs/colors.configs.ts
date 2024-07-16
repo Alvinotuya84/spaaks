@@ -14,6 +14,8 @@ export const Colors = {
     surface: '#F6F7FB',
     text: '#000',
     stroke: '#000',
+    primaryGray: '#8E8E93',
+
     background: '#fff',
     danger: '#FF0000',
     success: '#009246',
@@ -22,6 +24,7 @@ export const Colors = {
     primary: '#1C59CD',
     border: 'rgb(39, 39, 41)',
     secondary: 'red',
+    primaryGray: '#8E8E93',
 
     surface: '#1C1C1E',
 
