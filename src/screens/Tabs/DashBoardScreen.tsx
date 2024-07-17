@@ -27,6 +27,7 @@ import Rating from '@/src/components/reusables/Rating';
 import ThemedModal from '@/src/components/reusables/ThemedModal';
 import {useDispatch} from 'react-redux';
 import {addItemToCart} from '@/src/app/features/theme/cartSlice';
+import ThemedActivityIndicator from '@/src/components/reusables/ThemedActivityIndicator';
 
 type Props = {};
 
@@ -81,8 +82,10 @@ const DashBoardScreen = (props: Props) => {
           }}
         />
       </Box>
-      <Box flex={1} gap={10} pa={10}>
+      <Box flex={1} color={theme.background} gap={10} pa={10}>
+        {isIpLoading && <ThemedActivityIndicator size={'large'} />}
         <FlashList
+          estimatedItemSize={50}
           data={products}
           renderItem={({item}) => <ProductItem product={item} />}
           keyExtractor={item => item.id.toString()}
