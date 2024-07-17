@@ -2,7 +2,6 @@
 
 A React Native app that displays information about products and a simple add to cart of the products displayed
 
-
 ## Table of Contents
 
 - [Features](#Features)
@@ -40,9 +39,7 @@ npx react-native run-android
 ## Screenshots
 
 - Home screen
-  ![](/assets/screenshot-recordings/Screenshot_1718774035.png)
+  ![](/assets/screenshot-recordings/Screenshot_1721195901.png)
 
 - Cart screen
-  ![](/assets/screenshot-recordings/Screenshot_1718777543.png)
-
-
+  ![](/assets/screenshot-recordings/Screenshot_1721195920.png)
