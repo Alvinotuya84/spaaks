@@ -1,8 +1,7 @@
 # Amega Mobile
 
-A React Native app that displays user IP and ISP information, showcases a selectable image slider, and provides real-time market data for cryptocurrencies.
+A React Native app that displays information about products and a simple add to cart of the products displayed
 
-https://github.com/Alvinotuya84/Amega/blob/main/assets/screenshot-recordings/Amega.gif
 
 ## Table of Contents
 
@@ -25,14 +24,14 @@ How to Install & test the React Native App
 
 ```bash
 git clone this repo
-cd Amega
+cd spaaks
 yarn install
 npx react-native run-android
 ```
 
 ## Download the apk via google drive
 
--[Android APK: ](https://drive.google.com/file/d/1soClcjXzsSQZsHiXwWB2enm1rFBC3805/view?usp=sharing)
+-[Android APK: ](https://drive.google.com/file/d/1NaoC7HDjP9tEPgJMadwmm5-5nEytRnEt/view?usp=sharing)
 
 ## Tech Stack
 
@@ -43,11 +42,7 @@ npx react-native run-android
 - Home screen
   ![](/assets/screenshot-recordings/Screenshot_1718774035.png)
 
-- Profile screen
+- Cart screen
   ![](/assets/screenshot-recordings/Screenshot_1718777543.png)
 
-- Market Details Screen
-  ![](/assets/screenshot-recordings/Screenshot_1718778415.png)
 
-- Market Listing screen
-  ![](/assets/screenshot-recordings/Screenshot_1718774055.png)
